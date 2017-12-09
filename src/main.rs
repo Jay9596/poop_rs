@@ -17,6 +17,8 @@ fn main() {
             let o = poop_rs::poop_out(&args[2]);
             print!("Poop output:");
             println!("{}", o);
+        } else {
+            print_help();
         }
     } else {
         print_help();
@@ -63,6 +65,8 @@ fn check_file(name: &str) -> bool {
 }
 
 fn print_help() {
-    println!("poop-rs v0.1.0");
+    println!("poop_rs v1.0.0");
     println!("Enter a '.poop' file as argument to run it");
+    println!("Enter a text to output poop code using the -o OR -out flag");
+    println!("Eg: .\\poop_rs -out \"poopy rust\"");
 }
