@@ -72,9 +72,50 @@ pub fn run(source: &str) -> Vec<String> {
     output_text
 }
 
+pub fn poop_out(text: &str) -> String {
+    let mut output = String::new();
+
+    let mut mem_pointer = 0;
+    let text: Vec<char> = text.chars().collect();
+    for i in text {
+        match i {
+            ' ' => {
+                //  println!("Space");
+                output.push_str("sniff\nflush\n");
+                mem_pointer = 0;
+            }
+            _ => {
+                if let Some(index) = CHARACTERS.find(i.to_lowercase().next().unwrap()) {
+                    if index > mem_pointer {
+                        let diff = index - mem_pointer;
+                        mem_pointer += diff;
+                        for _ in 0..diff {
+                            output.push_str("eat ");
+                        }
+                    } else {
+                        let diff = mem_pointer - index;
+                        mem_pointer -= diff;
+                        for _ in 0..diff {
+                            output.push_str("puke ");
+                        }
+                    }
+                }
+                if i.is_uppercase() {
+                    output.push_str("\nPOOP\n");
+                } else {
+                    output.push_str("\npoop\n");
+                }
+            }
+        }
+    }
+    output.push_str("\nsniff");
+    output
+}
+
+
 #[cfg(test)]
 mod test {
-    use super::run;
+    use super::{run, poop_out};
 
    #[test]
    fn jay() {
@@ -88,5 +129,17 @@ mod test {
        assert_eq!(run("eat eat eat eat eat eat eat eat eat poop puke puke puke puke poop eat eat eat eat poop puke puke puke poop sniff")
         .join(" ").to_string(),
        "9596");
+   }
+
+   #[test]
+   fn out_9596() {
+       assert_eq!(poop_out("9596"), 
+       "eat eat eat eat eat eat eat eat eat \npoop\npuke puke puke puke \npoop\neat eat eat eat \npoop\npuke puke puke \npoop\n\nsniff\n");
+   }
+
+   #[test]
+   fn out_cap_a() {
+       assert_eq!(poop_out("Aa"),
+       "eat eat eat eat eat eat eat eat eat eat \nPOOP\n\npoop\n\nsniff\n");
    }
 }
