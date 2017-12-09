@@ -12,6 +12,12 @@ fn main() {
         let src = parse_source(&read_file(&args[1]));
         let r = poop_rs::run(&src).join(" ").to_string();
         println!("{}", r);
+    } else if args.len() == 3 {
+        if args[1] == "-o" || args[1] == "-out" {
+            let o = poop_rs::poop_out(&args[2]);
+            print!("Poop output:");
+            println!("{}", o);
+        }
     } else {
         print_help();
     }
