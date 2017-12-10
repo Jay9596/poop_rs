@@ -25,12 +25,17 @@ fn main() {
     }
 }
 
+// parse_source converts the String read from file to a single spaced String to feed the run function.
+// The read String has unnecessary whitesapces and linebreaks that are not needed.  
 fn parse_source(source: &str) -> String {
+    // Transform the single string to a vector of strings by splitting at whitespaces.
     let src: Vec<&str> = source.split_whitespace().collect();
+    // Join the Vector to form a single String with even spaces.
     let src = src.join(" ").to_string();
     src
 }
 
+// read_file reads a file and returns the content as a String
 fn read_file(name: &str) -> String {
     if check_file(name) {
         let path = Path::new(name);
@@ -56,6 +61,8 @@ fn read_file(name: &str) -> String {
     }
 }
 
+// check_file checks if the file given is a '.poop' file or not.
+// Split the name at '.' and check if the last element is "poop"
 fn check_file(name: &str) -> bool {
     let parts: Vec<&str> = name.split('.').collect();
     if parts.last() == Some(&"poop") {
@@ -64,6 +71,7 @@ fn check_file(name: &str) -> bool {
     false
 }
 
+// print_help displays the help text for the program
 fn print_help() {
     println!("poop_rs v1.0.0");
     println!("Enter a '.poop' file as argument to run it");
